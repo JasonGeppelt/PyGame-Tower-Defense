@@ -1,5 +1,6 @@
 import pygame
 import sys
+import random
 from settings import SCREEN_WIDTH, SCREEN_HEIGHT, FPS, WHITE, BLACK, BLUE, RED
 from tower import Tower
 from enemy import Enemy
