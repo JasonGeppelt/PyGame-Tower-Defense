@@ -1,0 +1,7 @@
+Grid system for walls, towers, and enemies.
+
+One map, 3 enemies, 3 towers, 5 levels.
+Enemies: speed, health
+Towers: speed, range, damage
+Levels: frequecy of vaious enemies
+
