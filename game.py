@@ -1,5 +1,5 @@
 # GAME
-# Manages the overall game flow, such as starting the game, ending the game, 
+# Manages the overall game flow, including starting and ending the game,
 # and handling transitions between game states (e.g., menus, gameplay, game over).
 
 import pygame
@@ -8,37 +8,35 @@ from settings_manager import screen_height, screen_width, Colors, health, money
 
 class Game:
     def __init__(self):
-        # Initialize the game
+        """Initialize the game."""
         pygame.init()
+
+        # Screen properties
         self.screen_width = screen_width
         self.screen_height = screen_height
         self.screen = pygame.display.set_mode((self.screen_width, self.screen_height))
         pygame.display.set_caption("Tower Defense Prototype")
 
-        # Initialize tower properties and grid parameters
-        self.tower_size = 50
+        # Tower and grid parameters
+        self.tower_size = 50  # Size of each tower
         self.tower_options = [
-            pygame.Rect(screen_width * (1/4) - 25, screen_height - self.tower_size, self.tower_size, self.tower_size),
-            pygame.Rect(screen_width * (2/4) - 25, screen_height - self.tower_size, self.tower_size, self.tower_size),
-            pygame.Rect(screen_width * (3/4) - 25, screen_height - self.tower_size, self.tower_size, self.tower_size)
+            pygame.Rect(screen_width * (1/4) - 25, screen_height - self.tower_size, self.tower_size, self.tower_size),  # Position and size of first tower option
+            pygame.Rect(screen_width * (2/4) - 25, screen_height - self.tower_size, self.tower_size, self.tower_size),  # Position and size of second tower option
+            pygame.Rect(screen_width * (3/4) - 25, screen_height - self.tower_size, self.tower_size, self.tower_size)   # Position and size of third tower option
         ]
-        self.tower_colors = [Colors.RED, Colors.GREEN, Colors.BLUE]
-        self.selected_tower = None
+        self.tower_colors = [Colors.RED, Colors.GREEN, Colors.BLUE]  # Colors associated with each tower option
+        self.selected_tower = None  # The currently selected tower
 
-        self.grid_rows = 10
-        self.grid_cols = 10
-        self.cell_size = self.tower_size
+        self.grid_rows = 10  # Number of rows in the grid
+        self.grid_cols = 10  # Number of columns in the grid
+        self.cell_size = self.tower_size  # Size of each cell in the grid, same as tower size
 
-        self.start_x = (self.screen_width - self.grid_cols * self.cell_size) / 2
-        self.available_vertical_space = self.screen_height - self.tower_size
-        self.grid_height = self.grid_rows * self.cell_size
-        self.start_y = (self.available_vertical_space - self.grid_height) / 2
+        self.start_x = (self.screen_width - self.grid_cols * self.cell_size) / 2  # X-coordinate to start drawing the grid
+        self.available_vertical_space = self.screen_height - self.tower_size  # Available vertical space for the grid
+        self.grid_height = self.grid_rows * self.cell_size  # Height of the grid
+        self.start_y = (self.available_vertical_space - self.grid_height) / 2  # Y-coordinate to start drawing the grid
 
-        if self.start_y < 0:
-            self.start_y = 0
-        elif self.start_y + self.grid_height > self.available_vertical_space:
-            self.start_y = self.available_vertical_space - self.grid_height
-
+        # Initialize grid
         self.grid = [[pygame.Rect(self.start_x + x * self.cell_size, self.start_y + y * self.cell_size, self.cell_size, self.cell_size) for x in range(self.grid_cols)] for y in range(self.grid_rows)]
         self.grid_colors = [[Colors.WHITE for _ in range(self.grid_cols)] for _ in range(self.grid_rows)]
 
@@ -56,7 +54,11 @@ class Game:
         self.exit_button_color = Colors.RED
         self.exit_text_color = Colors.WHITE
 
+    # ---------------------
+    # UI Manager
+    # ---------------------
     def draw_ui(self):
+        """Draws the user interface on the screen."""
         # Display health
         health_text = self.font.render("Health: {}".format(self.health), True, self.health_color)
         self.screen.blit(health_text, (20, 20))
@@ -72,8 +74,16 @@ class Game:
 
         pygame.display.flip()
 
+    # ---------------------
+    # Input Manager
+    # ---------------------
     def handle_mouse_click(self, mouse_x, mouse_y):
-    # Check if a tower option was clicked and update the selected color
+        """Handles mouse click events.
+
+        Args:
+            mouse_x (int): The x-coordinate of the mouse click.
+            mouse_y (int): The y-coordinate of the mouse click.
+        """        # Check if a tower option was clicked and update the selected color
         for i in range(3):
             if self.tower_options[i].collidepoint(mouse_x, mouse_y):
                 self.selected_tower = self.tower_colors[i]
@@ -92,8 +102,11 @@ class Game:
             pygame.quit()
             sys.exit()
 
+    # ---------------------
+    # Game Loop
+    # ---------------------
     def run(self):
-        # Game loop
+        """Runs the game loop."""
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
