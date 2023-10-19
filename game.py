@@ -7,6 +7,8 @@ import sys
 from settings_manager import screen_height, screen_width, Colors, health, money
 from level import maze
 from enemy import Enemy
+from tower import Tower
+from grid_cell import GridCell
 
 class Game:
     def __init__(self):
@@ -22,28 +24,16 @@ class Game:
         self.screen = pygame.display.set_mode((self.screen_width, self.screen_height))
         pygame.display.set_caption("Tower Defense Prototype")
 
-        # Tower and grid parameters
-        self.tower_size = 50  # Size of each tower
-        self.tower_options = [
-            pygame.Rect(screen_width * (1/4) - 25, screen_height - self.tower_size, self.tower_size, self.tower_size),  # Position and size of first tower option
-            pygame.Rect(screen_width * (2/4) - 25, screen_height - self.tower_size, self.tower_size, self.tower_size),  # Position and size of second tower option
-            pygame.Rect(screen_width * (3/4) - 25, screen_height - self.tower_size, self.tower_size, self.tower_size)   # Position and size of third tower option
-        ]
+        Tower(screen_width, screen_height) #Initialize Tower
+
         self.tower_colors = [Colors.RED, Colors.GREEN, Colors.BLUE]  # Colors associated with each tower option
         self.selected_tower = None  # The currently selected tower
 
-        self.grid_rows = 10  # Number of rows in the grid
-        self.grid_cols = 10  # Number of columns in the grid
-        self.cell_size = self.tower_size  # Size of each cell in the grid, same as tower size
+        self.tower_size = 50  # Size of each tower
 
-        self.start_x = (self.screen_width - self.grid_cols * self.cell_size) / 2  # X-coordinate to start drawing the grid
-        self.available_vertical_space = self.screen_height - self.tower_size  # Available vertical space for the grid
-        self.grid_height = self.grid_rows * self.cell_size  # Height of the grid
-        self.start_y = (self.available_vertical_space - self.grid_height) / 2  # Y-coordinate to start drawing the grid
+        GridCell(screen_width, screen_height, Colors)
 
-        # Initialize grid
-        self.grid = [[pygame.Rect(self.start_x + x * self.cell_size, self.start_y + y * self.cell_size, self.cell_size, self.cell_size) for x in range(self.grid_cols)] for y in range(self.grid_rows)]
-        self.grid_colors = [[Colors.WHITE for _ in range(self.grid_cols)] for _ in range(self.grid_rows)]
+
 
         # Initialize game variables
         self.health = health
