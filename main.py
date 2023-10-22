@@ -1,7 +1,8 @@
 import pygame
 import sys
 from settings import SCREEN_WIDTH, SCREEN_HEIGHT, FPS, CELL_SIZE, GRID_COLUMNS, GRID_ROWS, colors
-from level import level_enemy_lists, level_enemy_instructions, level_maps
+from level import level_enemy_lists, level_enemy_instructions
+from draw import draw_grid, draw_towers, draw_enemies, draw_ui
 
 pygame.init()
 
@@ -24,51 +25,32 @@ enemy_list = level_enemy_lists.get(current_level, [])
 enemy_instructions = level_enemy_instructions.get(current_level, [])
 active_enemy_list = [] 
 time_since_last_enemy = pygame.time.get_ticks()
+
+# UI elements
+font = pygame.font.Font(None, 30) # i tried to move this to settings.py, but it wouldnt work
+exit_button = pygame.Rect(SCREEN_WIDTH - 120, 20, 100, 40)
 # ------------------------------------------------
 
+# Game loop
 running = True
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+        # if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+        #         mouse_x, mouse_y = pygame.mouse.get_pos()
+        #         handle_mouse_click(mouse_x, mouse_y)
     
-    screen.fill((0, 0, 0))
-
     # --------------------------------------------
-    # GAME LOGIC
+    # DRAW
     # --------------------------------------------
-    # Draw the grid based on the level map
-    for row in range(GRID_ROWS):
-        for col in range(GRID_COLUMNS):
-            cell_value = level_maps[current_level][row][col]
-            rect = pygame.Rect(col * CELL_SIZE + grid_start_x,
-                                row * CELL_SIZE + grid_start_y, CELL_SIZE, CELL_SIZE)
-            # Draw cells
-            if cell_value == 1:
-                pygame.draw.rect(screen, colors['gunmetal'], rect)
-            else:
-                pygame.draw.rect(screen, colors['air_force_blue'], rect)
+    screen.fill(colors['black'])
 
-            # Draw cell borders
-            pygame.draw.rect(screen, colors['khaki'], rect, 1)
-    
-    current_time = pygame.time.get_ticks()
-    time_elapsed = current_time - time_since_last_enemy
-
-    if time_elapsed >= 2000:
-        if enemy_list:
-            enemy_class = enemy_list.pop(0)
-            new_enemy = enemy_class(CELL_SIZE + grid_start_x + (CELL_SIZE // 2) - (enemy_class.width // 2), 
-                                    grid_start_y + (CELL_SIZE // 2) - (enemy_class.height // 2))
-            new_enemy.instructions = enemy_instructions.copy() # created a copy of list instead of sharing
-            active_enemy_list.append(new_enemy)
-            time_since_last_enemy = 0
-
-        time_since_last_enemy = current_time
-
-    for enemy in active_enemy_list:
-        enemy.move()
-        pygame.draw.rect(screen, enemy.color, enemy.rect)
+    draw_grid(current_level, grid_start_x, grid_start_y, screen)
+    draw_towers(screen)
+    time_since_last_enemy = draw_enemies(time_since_last_enemy, enemy_list, grid_start_x, 
+                                         grid_start_y, enemy_instructions, active_enemy_list, screen)
+    draw_ui(screen, exit_button, SCREEN_WIDTH, font)
     # --------------------------------------------
 
     pygame.display.flip()

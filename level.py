@@ -55,7 +55,7 @@ level_enemy_instructions = {
 
 level_enemy_lists = {
     1: [BasicEnemy, BasicEnemy, BasicEnemy, AdvancedEnemy, BasicEnemy],
-    2: [AdvancedEnemy, AdvancedEnemy, BasicEnemy, BasicEnemy, AdvancedEnemy, 
+    2: [BasicEnemy, AdvancedEnemy, AdvancedEnemy, BasicEnemy, BasicEnemy, AdvancedEnemy, 
         BasicEnemy, AdvancedEnemy, BasicEnemy]
     # Define lists for other levels here
 }

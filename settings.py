@@ -3,6 +3,10 @@ FPS = 60
 CELL_SIZE = 50
 GRID_COLUMNS = 10
 GRID_ROWS = 10
+ENEMY_SPAWN_FREQ = 2000 # Every 2 seconds
+
+health = 100
+money = 250
 
 colors = {
     'black': (0, 0, 0),
@@ -11,6 +15,7 @@ colors = {
     'light_gray': (200, 200, 200),
     'blue': (0, 0, 255),
     'red': (255, 0, 0),
+    'dark_red': (150, 0, 0),
     'green': (0, 255, 0),
     'yellow': (255, 255, 0),
     'gunmetal': (24, 40, 37),
