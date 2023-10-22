@@ -4,11 +4,9 @@
 
 import pygame
 import sys
-from settings_manager import screen_height, screen_width, Colors, health, money
+from settings import SCREEN_HEIGHT, SCREEN_WIDTH, CELL_SIZE, health, money
 from level import maze
 from enemy import Enemy
-from tower import Tower
-from grid_cell import GridCell
 
 class Game:
     def __init__(self):
@@ -19,21 +17,33 @@ class Game:
         self.path = [(x * 20 + 10, 10) for x in range(10)]  # Define the path for the enemy
 
         # Screen properties
-        self.screen_width = screen_width
-        self.screen_height = screen_height
-        self.screen = pygame.display.set_mode((self.screen_width, self.screen_height))
+        self.SCREEN_WIDTH = SCREEN_WIDTH
+        self.SCREEN_HEIGHT = SCREEN_HEIGHT
+        self.screen = pygame.display.set_mode((self.SCREEN_WIDTH, self.SCREEN_HEIGHT))
         pygame.display.set_caption("Tower Defense Prototype")
 
-        Tower(screen_width, screen_height) #Initialize Tower
-
+        # Tower and grid parameters
+        self.tower_size = CELL_SIZE  # Size of each tower
+        self.tower_options = [
+            pygame.Rect(SCREEN_WIDTH * (1/4) - 25, SCREEN_HEIGHT - self.tower_size, self.tower_size, self.tower_size),  # Position and size of first tower option
+            pygame.Rect(SCREEN_WIDTH * (2/4) - 25, SCREEN_HEIGHT - self.tower_size, self.tower_size, self.tower_size),  # Position and size of second tower option
+            pygame.Rect(SCREEN_WIDTH * (3/4) - 25, SCREEN_HEIGHT - self.tower_size, self.tower_size, self.tower_size)   # Position and size of third tower option
+        ]
         self.tower_colors = [Colors.RED, Colors.GREEN, Colors.BLUE]  # Colors associated with each tower option
         self.selected_tower = None  # The currently selected tower
 
-        self.tower_size = 50  # Size of each tower
+        self.grid_rows = 10  # Number of rows in the grid
+        self.grid_cols = 10  # Number of columns in the grid
+        self.cell_size = self.tower_size  # Size of each cell in the grid, same as tower size
 
-        GridCell(screen_width, screen_height, Colors)
+        self.start_x = (self.SCREEN_WIDTH - self.grid_cols * self.cell_size) / 2  # X-coordinate to start drawing the grid
+        self.available_vertical_space = self.SCREEN_HEIGHT - self.tower_size  # Available vertical space for the grid
+        self.grid_height = self.grid_rows * self.cell_size  # Height of the grid
+        self.start_y = (self.available_vertical_space - self.grid_height) / 2  # Y-coordinate to start drawing the grid
 
-
+        # Initialize grid
+        self.grid = [[pygame.Rect(self.start_x + x * self.cell_size, self.start_y + y * self.cell_size, self.cell_size, self.cell_size) for x in range(self.grid_cols)] for y in range(self.grid_rows)]
+        self.grid_colors = [[Colors.WHITE for _ in range(self.grid_cols)] for _ in range(self.grid_rows)]
 
         # Initialize game variables
         self.health = health
@@ -43,7 +53,7 @@ class Game:
         self.enemies = []
 
         # Initialize exit button
-        self.exit_button = pygame.Rect(self.screen_width - 120, 20, 100, 40)
+        self.exit_button = pygame.Rect(self.SCREEN_WIDTH - 120, 20, 100, 40)
 
         # Load font and colors for UI text
         self.font = pygame.font.Font(None, 30)  # Set font size to 30
@@ -75,7 +85,7 @@ class Game:
         # Draw exit button
         pygame.draw.rect(self.screen, self.exit_button_color, self.exit_button)
         exit_text = self.font.render("Exit", True, self.exit_text_color)
-        self.screen.blit(exit_text, (self.screen_width - 100, 30))
+        self.screen.blit(exit_text, (self.SCREEN_WIDTH - 100, 30))
 
         pygame.display.flip()
 
@@ -114,8 +124,14 @@ class Game:
     def run(self):
         """Runs the game loop."""
         clock = pygame.time.Clock()  # Create a clock to control the frame rate
-        enemy_spawn_interval = 2000  # Spawn a new enemy every 2000 milliseconds (2 seconds)
-        last_enemy_spawn_time = 0  # Track the time of the last enemy spawn
+        
+        # Initialize game elements
+        current_level = 1
+        enemy_list = level_enemy_lists.get(current_level, [])
+        enemy_instructions = level_enemy_instructions.get(current_level, [])
+        active_enemy_list = [] 
+
+        time_since_last_enemy = pygame.time.get_ticks()
 
         while True:
             for event in pygame.event.get():
@@ -129,11 +145,17 @@ class Game:
 
             # Spawn a new enemy based on the spawn interval
             current_time = pygame.time.get_ticks()
-            if current_time - last_enemy_spawn_time > enemy_spawn_interval:
-                last_enemy_spawn_time = current_time
-                new_enemy = Enemy(self.cell_size, self.start_x, self.start_y)  # Assuming self.cell_size is defined in Game class
-                # Add the new enemy to your list of enemies (you'll need to maintain a list for all enemies)
-                self.enemies.append(new_enemy)
+            time_elapsed = current_time - time_since_last_enemy
+
+            if time_elapsed >= 2000:
+                if enemy_list:
+                    enemy_class = enemy_list.pop(0)
+                    new_enemy = enemy_class((WIDTH // 2) - (enemy_class.width // 2), (HEIGHT // 2) - (enemy_class.height // 2))
+                    new_enemy.instructions = enemy_instructions.copy() # created a copy of list instead of sharing
+                    active_enemy_list.append(new_enemy)
+                    time_since_last_enemy = 0
+
+                time_since_last_enemy = current_time
 
             # Move all enemies
             for enemy in self.enemies:
