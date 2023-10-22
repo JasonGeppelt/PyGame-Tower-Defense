@@ -46,8 +46,6 @@ class Enemy:
         else:
             self.current_direction = None
 
-
-
 class BasicEnemy(Enemy):
     width, height = 30, 30
     color = colors['blue']

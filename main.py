@@ -6,14 +6,14 @@ from level import level_enemy_lists, level_enemy_instructions, level_maps
 pygame.init()
 
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-pygame.display.set_caption("Tower Defense Game")
+pygame.display.set_caption("Pygame Tower Defense")
 
 clock = pygame.time.Clock()
 
 # ------------------------------------------------
 # INITIALIZE GAME ELEMENTS
 # ------------------------------------------------
-current_level = 2
+current_level = 2 # For now, use this to change the level!!!
 
 # Grid elements
 grid_start_x, grid_start_y = ((SCREEN_WIDTH // 2) - (GRID_COLUMNS // 2) * CELL_SIZE), 0
@@ -43,13 +43,10 @@ while running:
             cell_value = level_maps[current_level][row][col]
             rect = pygame.Rect(col * CELL_SIZE + grid_start_x,
                                 row * CELL_SIZE + grid_start_y, CELL_SIZE, CELL_SIZE)
-
-            # Draw the cell and its border
+            # Draw cells
             if cell_value == 1:
-                # Color the cells for 1s
                 pygame.draw.rect(screen, colors['gunmetal'], rect)
             else:
-                # Color the cells for 0s
                 pygame.draw.rect(screen, colors['air_force_blue'], rect)
 
             # Draw cell borders
