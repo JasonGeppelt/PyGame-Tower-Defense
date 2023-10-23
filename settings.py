@@ -4,9 +4,8 @@ CELL_SIZE = 50
 GRID_COLUMNS = 10
 GRID_ROWS = 10
 ENEMY_SPAWN_FREQ = 2000 # Every 2 seconds
-
-health = 100
-money = 250
+STARTING_HEALTH = 100
+STARTING_MONEY = 250
 
 colors = {
     'black': (0, 0, 0),

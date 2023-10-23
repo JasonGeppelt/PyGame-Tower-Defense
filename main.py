@@ -1,6 +1,6 @@
 import pygame
 import sys
-from settings import SCREEN_WIDTH, SCREEN_HEIGHT, FPS, CELL_SIZE, GRID_COLUMNS, GRID_ROWS, colors, health, money
+from settings import SCREEN_WIDTH, SCREEN_HEIGHT, FPS, CELL_SIZE, GRID_COLUMNS, colors, STARTING_HEALTH, STARTING_MONEY
 from level import level_enemy_lists, level_enemy_instructions, level_maps
 from draw import draw_grid, draw_tower_choices, draw_enemies, draw_ui, draw_active_towers
 from interaction import handle_mouse_click
@@ -33,8 +33,8 @@ active_towers = []
 # UI elements
 font = pygame.font.Font(None, 30) # i tried to move this to settings.py, but it wouldnt work
 exit_button = pygame.Rect(SCREEN_WIDTH - 120, 20, 100, 40)
-player_health = health
-player_money = money
+player_health = STARTING_HEALTH
+player_money = STARTING_MONEY
 
 # Interaction elements
 selected_tower = None
@@ -60,7 +60,7 @@ while running:
     time_since_last_enemy = draw_enemies(time_since_last_enemy, enemy_list, grid_start_x, 
                                          grid_start_y, enemy_instructions, active_enemy_list, screen)
     draw_active_towers(active_towers, screen)
-    draw_ui(screen, exit_button, SCREEN_WIDTH, font, player_money)
+    draw_ui(screen, exit_button, SCREEN_WIDTH, font, player_money, player_health)
 
     pygame.display.flip()
 

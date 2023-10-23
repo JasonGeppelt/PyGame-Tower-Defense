@@ -1,5 +1,5 @@
 import pygame
-from settings import SCREEN_WIDTH, SCREEN_HEIGHT, CELL_SIZE, GRID_COLUMNS, GRID_ROWS, ENEMY_SPAWN_FREQ, health, colors
+from settings import SCREEN_WIDTH, SCREEN_HEIGHT, CELL_SIZE, GRID_COLUMNS, GRID_ROWS, ENEMY_SPAWN_FREQ, colors
 from level import level_maps 
 from tower import Tower1, Tower2, Tower3
 
@@ -51,9 +51,9 @@ def draw_enemies(time_since_last_enemy, enemy_list, x, y, enemy_instructions, ac
     
     return time_since_last_enemy
 
-def draw_ui(screen, exit_button, SCREEN_WIDTH, font, player_money):
+def draw_ui(screen, exit_button, SCREEN_WIDTH, font, player_money, player_health):
     # Display health
-    health_text = font.render("Health: {}".format(health), True, colors['green'])
+    health_text = font.render("Health: {}".format(player_health), True, colors['green'])
     screen.blit(health_text, (20, 20))
 
     # Display money
