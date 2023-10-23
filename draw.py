@@ -1,5 +1,5 @@
 import pygame
-from settings import CELL_SIZE, GRID_COLUMNS, GRID_ROWS, ENEMY_SPAWN_FREQ, health, money, colors
+from settings import SCREEN_WIDTH, SCREEN_HEIGHT, CELL_SIZE, GRID_COLUMNS, GRID_ROWS, ENEMY_SPAWN_FREQ, health, colors
 from level import level_maps 
 from tower import Tower1, Tower2, Tower3
 
@@ -11,22 +11,24 @@ def draw_grid(current_level, x, y, screen):
             rect = pygame.Rect(col * CELL_SIZE + x,
                                 row * CELL_SIZE + y, CELL_SIZE, CELL_SIZE)
             # Draw cells
-            if cell_value == 1:
-                pygame.draw.rect(screen, colors['gunmetal'], rect)
-            else:
+            if cell_value == 0:
                 pygame.draw.rect(screen, colors['air_force_blue'], rect)
+            else:
+                pygame.draw.rect(screen, colors['gunmetal'], rect)
 
             # Draw cell borders
             pygame.draw.rect(screen, colors['khaki'], rect, 1)
 
-def draw_towers(screen):
-    tower1 = Tower1()
-    tower2 = Tower2()
-    tower3 = Tower3()
+def draw_tower_choices(screen):
+    tower1 = Tower1(SCREEN_WIDTH * (1/4) - Tower1.width // 2, (GRID_ROWS * CELL_SIZE + SCREEN_HEIGHT) // 2 - Tower1.height // 2)
+    tower2 = Tower2(SCREEN_WIDTH * (2/4) - Tower2.width // 2, (GRID_ROWS * CELL_SIZE + SCREEN_HEIGHT) // 2 - Tower2.height // 2)
+    tower3 = Tower3(SCREEN_WIDTH * (3/4) - Tower3.width // 2, (GRID_ROWS * CELL_SIZE + SCREEN_HEIGHT) // 2 - Tower3.height // 2)
 
-    pygame.draw.rect(screen, tower1.color, tower1.rect)
-    pygame.draw.rect(screen, tower2.color, tower2.rect)
-    pygame.draw.rect(screen, tower3.color, tower3.rect)
+    tower1_choice = pygame.draw.rect(screen, tower1.color, tower1.rect)
+    tower2_choice = pygame.draw.rect(screen, tower2.color, tower2.rect)
+    tower3_choice = pygame.draw.rect(screen, tower3.color, tower3.rect)
+
+    return tower1_choice, tower2_choice, tower3_choice
 
 def draw_enemies(time_since_last_enemy, enemy_list, x, y, enemy_instructions, active_enemy_list, screen):
     current_time = pygame.time.get_ticks()
@@ -49,16 +51,20 @@ def draw_enemies(time_since_last_enemy, enemy_list, x, y, enemy_instructions, ac
     
     return time_since_last_enemy
 
-def draw_ui(screen, exit_button, SCREEN_WIDTH, font):
+def draw_ui(screen, exit_button, SCREEN_WIDTH, font, player_money):
     # Display health
     health_text = font.render("Health: {}".format(health), True, colors['green'])
     screen.blit(health_text, (20, 20))
 
     # Display money
-    money_text = font.render("Money: ${}".format(money), True, colors['white'])
+    money_text = font.render("Money: ${}".format(player_money), True, colors['white'])
     screen.blit(money_text, (20, 60))
 
     # Draw exit button
     pygame.draw.rect(screen, colors['red'], exit_button)
     exit_text = font.render("Exit", True, colors['white'])
     screen.blit(exit_text, (SCREEN_WIDTH - 100, 30))
+
+def draw_active_towers(active_towers, screen):
+    for tower in active_towers:
+        pygame.draw.rect(screen, tower.color, tower.rect)

@@ -58,4 +58,4 @@ class AdvancedEnemy(Enemy):
     color = colors['red']
     health = 20
     damage = 5
-    speed = 5
+    speed = 3
