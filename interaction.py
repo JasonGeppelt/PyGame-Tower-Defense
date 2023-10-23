@@ -32,13 +32,14 @@ def handle_mouse_click(mouse_x, mouse_y, selected_tower, grid_start_x, grid_star
             elif selected_tower == 3:
                 new_tower = Tower3(centered_x, centered_y)
 
-            player_money -= new_tower.cost
-            active_towers.append(new_tower)
+            if (player_money - new_tower.cost >= 0):
+                player_money -= new_tower.cost
+                active_towers.append(new_tower)
 
-            # Update the grid to reflect the new tower placement
-            grid[grid_row][grid_col] = 2
+                # Update the grid to reflect the new tower placement
+                grid[grid_row][grid_col] = 2
 
-            selected_tower = None
+                selected_tower = None
 
     return selected_tower, active_towers, player_money
 
