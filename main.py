@@ -15,7 +15,7 @@ clock = pygame.time.Clock()
 # ------------------------------------------------
 # INITIALIZE GAME ELEMENTS
 # ------------------------------------------------
-current_level = 1 # For now, use this to change the level!!!
+current_level = 2 # For now, use this to change the level!!!
 
 # Grid elements
 grid_start_x, grid_start_y = ((SCREEN_WIDTH // 2) - (GRID_COLUMNS // 2) * CELL_SIZE), 0
