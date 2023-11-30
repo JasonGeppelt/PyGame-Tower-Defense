@@ -3,18 +3,17 @@ import sys
 from settings import CELL_SIZE, GRID_ROWS, GRID_COLUMNS
 from tower import Tower1, Tower2, Tower3
 
-def handle_mouse_click(mouse_x, mouse_y, selected_tower, grid_start_x, grid_start_y, grid, exit_button, tower1_choice, tower2_choice, tower3_choice, active_towers, player_money):
+def handle_mouse_click(mouse_x, mouse_y, selected_tower, grid_start_x, grid_start_y, grid, exit_button, tower_choices, active_towers, player_money):
     if exit_button.collidepoint(mouse_x, mouse_y):
         pygame.quit()
         sys.exit()
 
     # Set selected tower if user clicks on one of the options
-    if tower1_choice.collidepoint(mouse_x, mouse_y):
-        selected_tower = 1
-    if tower2_choice.collidepoint(mouse_x, mouse_y):
-        selected_tower = 2
-    if tower3_choice.collidepoint(mouse_x, mouse_y):
-        selected_tower = 3
+    for index, tower_choice in enumerate(tower_choices, start=1):
+        if tower_choice.collidepoint(mouse_x, mouse_y):
+            selected_tower = index
+            break
+
         
     # Set grid row and column based on where user clicks
     if grid_start_x <= mouse_x <= grid_start_x + GRID_ROWS * CELL_SIZE and grid_start_y <= mouse_y <= grid_start_y + GRID_COLUMNS * CELL_SIZE :

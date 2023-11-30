@@ -1,5 +1,6 @@
 from enemy import BasicEnemy, AdvancedEnemy
 
+# Pathfinder for enemies. Maybe should go somewhere else, but this file is the only place it is called
 def find_path(maze, start, end):
     def is_valid(x, y):
         return 0 <= x < len(maze) and 0 <= y < len(maze[0]) and maze[x][y] == 0
@@ -47,12 +48,6 @@ level_maps = {
     # Define maps for other levels here
 }
 
-level_enemy_instructions = {
-    1: find_path(level_maps.get(1, []), (0, 1), (9, 9)),
-    2: find_path(level_maps.get(2, []), (0, 1), (9, 8))
-    # Define paths for other levels here
-}
-
 level_enemy_lists = {
     1: [BasicEnemy, BasicEnemy, BasicEnemy, AdvancedEnemy, BasicEnemy],
     2: [BasicEnemy, AdvancedEnemy, AdvancedEnemy, BasicEnemy, BasicEnemy, AdvancedEnemy, 
@@ -60,3 +55,17 @@ level_enemy_lists = {
     # Define lists for other levels here
 }
 
+start_end_coords = {
+    1: [(0, 1), (9, 9)],
+    2: [(0, 1), (9, 8)]
+    # Define the start and end coords for other levels here
+}
+
+def get_level_map(level) :
+    return level_maps[level]
+
+def get_enemy_instructions(level):
+    return find_path(level_maps[level], start_end_coords[level][0], start_end_coords[level][1])
+
+def get_enemy_list(level):
+    return level_enemy_lists[level]
