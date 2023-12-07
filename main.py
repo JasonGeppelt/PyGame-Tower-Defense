@@ -1,7 +1,7 @@
 import pygame
 import sys
 from settings import SCREEN_WIDTH, SCREEN_HEIGHT, FPS, CELL_SIZE, GRID_COLUMNS, STARTING_HEALTH, STARTING_MONEY, colors
-from level import get_enemy_instructions, get_enemy_list, get_level_map
+from level import get_enemy_instructions, get_enemy_list, get_level_map, get_level_count
 from draw import draw_grid, draw_tower_choices, draw_enemies, draw_ui, draw_active_towers, flash_screen_red, game_over
 from user_interaction import handle_mouse_click
 
@@ -15,7 +15,14 @@ clock = pygame.time.Clock()
 # ------------------------------------------------
 # INITIALIZE GAME ELEMENTS
 # ------------------------------------------------
-current_level = 2 # For now, use this to change the level!!!
+current_level = 1 # For now, use this to change the level!!!
+
+
+
+# level_count = get_level_count()
+
+
+
 
 # Grid elements
 grid_start_x, grid_start_y = ((SCREEN_WIDTH // 2) - (GRID_COLUMNS // 2) * CELL_SIZE), 0
@@ -85,6 +92,17 @@ while running:
                 player_health -= enemy.health  # Reduce player health if enemy is done
                 flash_screen_red(screen, 150)
             active_enemy_list.remove(enemy)
+
+
+
+
+    # if not active_enemy_list and current_level != level_count:
+    #     current_level += 1
+
+
+
+
+
 
     # Render updates
     pygame.display.flip()

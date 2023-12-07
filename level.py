@@ -61,6 +61,9 @@ start_end_coords = {
     # Define the start and end coords for other levels here
 }
 
+def get_level_count():
+    return len(level_maps)
+
 def get_level_map(level) :
     return level_maps[level]
 
