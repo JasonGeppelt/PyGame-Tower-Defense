@@ -79,5 +79,5 @@ class BasicEnemy(Enemy):
 class AdvancedEnemy(Enemy):
     width, height = 20, 20
     color = colors['red']
-    health = 45
+    health = 30
     speed = 3

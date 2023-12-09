@@ -70,7 +70,7 @@ def draw_enemies(time_since_last_enemy, enemy_list, x, y, enemy_instructions, ac
     
     return time_since_last_enemy
 
-def draw_ui(screen, exit_button, SCREEN_WIDTH, UI_font, player_money, player_health):
+def draw_ui(screen, exit_button, SCREEN_WIDTH, UI_font, player_money, player_health, player_score):
     # Display health
     if player_health < 0:
         player_health = 0
@@ -85,6 +85,12 @@ def draw_ui(screen, exit_button, SCREEN_WIDTH, UI_font, player_money, player_hea
     pygame.draw.rect(screen, colors['red'], exit_button)
     exit_text = UI_font.render("Exit", True, colors['white'])
     screen.blit(exit_text, (SCREEN_WIDTH - 100, 30))
+
+    # Display score
+    score_text = UI_font.render(f"Score: {player_score}", True, colors['white'])
+    score_text_rect = score_text.get_rect()
+    score_text_rect.topleft = (20, 100) 
+    screen.blit(score_text, score_text_rect)
 
 def draw_active_towers(active_towers, screen):
     for tower in active_towers:

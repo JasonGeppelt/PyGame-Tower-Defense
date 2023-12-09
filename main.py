@@ -16,15 +16,18 @@ clock = pygame.time.Clock()
 # ------------------------------------------------
 # INITIALIZE GAME ELEMENTS
 # ------------------------------------------------
+# Game elements
 saved_state = load_game_state()
 if saved_state:
     current_level = saved_state["current_level"]
     player_health = saved_state["player_health"]
     player_money = saved_state["player_money"]
+    player_score = saved_state["player_score"]
 else:
     current_level = 1
     player_health = STARTING_HEALTH
     player_money = STARTING_MONEY
+    player_score = 0
 
 # Grid elements
 grid_start_x, grid_start_y = ((SCREEN_WIDTH // 2) - (GRID_COLUMNS // 2) * CELL_SIZE), 0
@@ -41,7 +44,7 @@ time_since_last_enemy = pygame.time.get_ticks()
 active_towers = []
 
 # UI elements
-UI_font = pygame.font.Font(None, 30) # i tried to move this to settings.py, but it wouldnt work
+UI_font = pygame.font.Font(None, 30)
 gameover_font = pygame.font.Font(None, 70)
 exit_button = pygame.Rect(SCREEN_WIDTH - 120, 20, 100, 40)
 
@@ -58,7 +61,7 @@ running = True
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            save_game_state(current_level, player_health, player_money)
+            save_game_state(current_level, player_health, player_money, player_score)
             running = False
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 mouse_x, mouse_y = pygame.mouse.get_pos()
@@ -70,7 +73,7 @@ while running:
     # Draw grid, tower choices, and UI
     draw_grid(current_level, grid_start_x, grid_start_y, screen)
     tower_choices = draw_tower_choices(screen, player_money, selected_tower)
-    draw_ui(screen, exit_button, SCREEN_WIDTH, UI_font, player_money, player_health)
+    draw_ui(screen, exit_button, SCREEN_WIDTH, UI_font, player_money, player_health, player_score)
 
     # Check for game over condition after updating health on screen
     if player_health <= 0:
@@ -111,8 +114,9 @@ while running:
         active_enemy_list = []
         active_towers = []
         enemies_spawned = False
-        player_money =+ 250
-        save_game_state(current_level, player_health, player_money)
+        player_money += 250
+        player_score += 1
+        save_game_state(current_level, player_health, player_money, player_score)
 
     # Check if player died
     if player_health <= 0:
@@ -121,7 +125,7 @@ while running:
         current_level = 1
         player_health = STARTING_HEALTH
         player_money = STARTING_MONEY
-        save_game_state(current_level, player_health, player_money)
+        save_game_state(current_level, player_health, player_money, player_score)
         running = False
 
     # Render updates
