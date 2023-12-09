@@ -45,19 +45,34 @@ level_maps = {
     [1, 1, 1, 0, 0, 0, 0, 0, 0, 1],
     [1, 1, 1, 1, 1, 1, 1, 1, 0, 1]
     ],
-    # Define maps for other levels here
+    3: [
+    [1, 0, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 0, 0, 0, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 0, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 0, 0, 0, 0, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 0, 1, 1, 1],
+    [1, 0, 0, 0, 0, 0, 0, 1, 1, 1],
+    [1, 0, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 0, 0]
+    ],
+    # Define maps for more levels here.
 }
 
 level_enemy_lists = {
     1: [BasicEnemy, BasicEnemy, BasicEnemy, AdvancedEnemy, BasicEnemy],
     2: [BasicEnemy, AdvancedEnemy, AdvancedEnemy, BasicEnemy, BasicEnemy, AdvancedEnemy, 
+        BasicEnemy, AdvancedEnemy, BasicEnemy],
+    3: [BasicEnemy, AdvancedEnemy, AdvancedEnemy, BasicEnemy, BasicEnemy, AdvancedEnemy, 
         BasicEnemy, AdvancedEnemy, BasicEnemy]
     # Define lists for other levels here
 }
 
 start_end_coords = {
     1: [(0, 1), (9, 9)],
-    2: [(0, 1), (9, 8)]
+    2: [(0, 1), (9, 8)],
+    3: [(0, 1), (9, 8)]
     # Define the start and end coords for other levels here
 }
 
