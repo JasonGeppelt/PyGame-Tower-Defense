@@ -1,32 +1,34 @@
 # Overview
 
-{Important!  Do not say in this section that this is college assignment.}
-
 {Provide a description of your team project.  Describe how to use the software.}
-
-{If this is an online class, then provide a link to your YouTube demonstration.  It should be a 4-5 minute demo of the software running and a walkthrough of the code.}
+This is a tower defense game. In order to play, you will need to install pygame and dbmongo.
+dbmongo: python -m pip install pymongo
+pygame: python3 -m pip install -U pygame --user
+Once you have those setup, click run from the main.py. Once there, you will be given a selection of towers to place. The goal
+is to strategically place your towers to destroy the enemy towers before they destroy your base.
 
 [Software Demo Video](http://youtube.link.goes.here)
 
 # Development Environment
 
-{Describe the tools that you used to develop the software}
+To aid with the development of this software, our team used GitHub to develop and share code. We would use Discord and MS Teams for communication
 
-{Describe the programming language that you used and any libraries.}
+The software was programmed in Python, using the Pygame library.
 
 # Collaborators
 
-{Provide a list of everyone on your team}
+Jason Geppelt
+Ben Wassum
+Dallin Hipps
+Ryan Donaldson
 
 # Useful Websites
 
 {Make a list of websites that you found helpful in this project}
-* [Web Site Name](http://url.link.goes.here)
-* [Web Site Name](http://url.link.goes.here)
+* [GeeksForGeeks](https://www.geeksforgeeks.org/pygame-tutorial/?ref=lbp)
 
 # Future Work
 
-{Make a list of things that you need to fix, improve, and add in the future.}
-* Item 1
+* Add our sprites to the game. Dallin created amazing sprites for the game. Unfortunately they were not implemented in time
 * Item 2
 * Item 3
