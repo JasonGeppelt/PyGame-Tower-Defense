@@ -21,4 +21,5 @@ def save_game_state(level, health, money, score):
 def load_game_state():
     return collection.find_one({"player_id": "1"})
 
-
+# RUN THIS FILE TO RESET SAVE STATE
+save_game_state(1, 100, 250, 0)
