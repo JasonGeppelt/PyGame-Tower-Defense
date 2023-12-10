@@ -7,7 +7,7 @@ pygame: python3 -m pip install -U pygame --user
 Once you have those setup, click run from the main.py. Once there, you will be given a selection of towers to place. The goal
 is to strategically place your towers to destroy the enemy towers before they destroy your base.
 
-[Software Demo Video](http://youtube.link.goes.here)
+[Software Demo Video](https://youtu.be/0Vhlte75oSA)
 
 # Development Environment
 
@@ -30,5 +30,3 @@ Ryan Donaldson
 # Future Work
 
 * Add our sprites to the game. Dallin created amazing sprites for the game. Unfortunately they were not implemented in time
-* Item 2
-* Item 3
