@@ -16,9 +16,9 @@ The software was programmed in Python, using the Pygame library.
 
 # Collaborators
 
-Jason Geppelt
-Ben Wassum
-Dallin Hipps
+Jason Geppelt, 
+Ben Wassum, 
+Dallin Hipps, 
 Ryan Donaldson
 
 # Useful Websites
