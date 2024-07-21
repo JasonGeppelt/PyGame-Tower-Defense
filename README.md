@@ -1,6 +1,5 @@
 # Overview
 
-{Provide a description of your team project.  Describe how to use the software.}
 This is a tower defense game. In order to play, you will need to install pygame and dbmongo.
 dbmongo: python -m pip install pymongo
 pygame: python3 -m pip install -U pygame --user
@@ -24,7 +23,6 @@ Ryan Donaldson
 
 # Useful Websites
 
-{Make a list of websites that you found helpful in this project}
 * [GeeksForGeeks](https://www.geeksforgeeks.org/pygame-tutorial/?ref=lbp)
 
 # Future Work
